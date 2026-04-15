@@ -1,0 +1,88 @@
+﻿<Page x:Class="MasterPol4.Views.WarehouseWindow"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Склад"
+      Background="#FFFFFF">
+
+    <Page.Resources>
+        <Style TargetType="TextBox" x:Key="SearchBox">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Width" Value="250"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Setter Property="BorderBrush" Value="#CCCCCC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+
+        <Style TargetType="DataGrid">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="AlternatingRowBackground" Value="#F9F9F9"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="AutoGenerateColumns" Value="False"/>
+            <Setter Property="CanUserAddRows" Value="False"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="RowHeight" Value="45"/>
+        </Style>
+
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#F4E8D3"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="Button" x:Key="ActionButton">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="Width" Value="85"/>
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+
+        <Style TargetType="Button" x:Key="AddButton">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width" Value="180"/>
+            <Setter Property="Background" Value="#67BA80"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Управление складом" FontSize="24" FontWeight="Bold" Margin="0,0,0,15"/>
+
+        <Border Grid.Row="1" Background="#F9F9F9" Padding="15" CornerRadius="8" Margin="0,0,0,15">
+            <StackPanel Orientation="Horizontal">
+                <TextBox x:Name="txtSearch" Style="{StaticResource SearchBox}" ToolTip="Поиск..." TextChanged="TxtSearch_TextChanged"/>
+                <Button Content="Поиск" Width="80" Height="35" Margin="10,0,0,0" Background="#67BA80" Foreground="White" BorderThickness="0" Click="BtnSearch_Click" Cursor="Hand"/>
+                <Button Content="Сбросить" Width="80" Height="35" Margin="10,0,0,0" Background="#E0E0E0" Foreground="#333333" BorderThickness="0" Click="BtnReset_Click" Cursor="Hand"/>
+            </StackPanel>
+        </Border>
+
+        <DataGrid x:Name="dgWarehouse" Grid.Row="3">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Тип" Binding="{Binding ItemType}" Width="100"/>
+                <DataGridTextColumn Header="Наименование" Binding="{Binding ItemName}" Width="250"/>
+                <DataGridTextColumn Header="Количество" Binding="{Binding Quantity}" Width="100"/>
+                <DataGridTextColumn Header="Ед.изм." Binding="{Binding Unit}" Width="80"/>
+                <DataGridTextColumn Header="Местоположение" Binding="{Binding Location}" Width="150"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

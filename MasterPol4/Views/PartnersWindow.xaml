@@ -1,0 +1,165 @@
+﻿<Page x:Class="MasterPol4.Views.PartnersWindow"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Партнеры"
+      Background="#FFFFFF">
+
+    <Page.Resources>
+        <Style TargetType="TextBox" x:Key="SearchBox">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Width" Value="250"/>
+            <Setter Property="Padding" Value="10,0"/>
+            <Setter Property="BorderBrush" Value="#CCCCCC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+
+        <Style TargetType="DataGrid">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="AlternatingRowBackground" Value="#F9F9F9"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="AutoGenerateColumns" Value="False"/>
+            <Setter Property="CanUserAddRows" Value="False"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="RowHeight" Value="45"/>
+        </Style>
+
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#F4E8D3"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="Button" x:Key="ActionButton">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="Width" Value="85"/>
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+
+        <Style TargetType="Button" x:Key="AddButton">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width" Value="180"/>
+            <Setter Property="Background" Value="#67BA80"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,0,0,15"/>
+        </Style>
+
+        <Style TargetType="Button" x:Key="SaveButton">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="Background" Value="#67BA80"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="10,0,10,0"/>
+        </Style>
+
+        <Style TargetType="Button" x:Key="CancelButton">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="Background" Value="#E0E0E0"/>
+            <Setter Property="Foreground" Value="#333333"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="10,0,10,0"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Управление партнерами" FontSize="24" FontWeight="Bold" Margin="0,0,0,15"/>
+
+        <Border Grid.Row="1" Background="#F9F9F9" Padding="15" CornerRadius="8" Margin="0,0,0,15">
+            <StackPanel Orientation="Horizontal">
+                <TextBox x:Name="txtSearch" Style="{StaticResource SearchBox}" ToolTip="Поиск..." TextChanged="TxtSearch_TextChanged"/>
+                <Button Content="Поиск" Width="80" Height="35" Margin="10,0,0,0" Background="#67BA80" Foreground="White" BorderThickness="0" Click="BtnSearch_Click" Cursor="Hand"/>
+                <Button Content="Сбросить" Width="80" Height="35" Margin="10,0,0,0" Background="#E0E0E0" Foreground="#333333" BorderThickness="0" Click="BtnReset_Click" Cursor="Hand"/>
+            </StackPanel>
+        </Border>
+
+        <Button x:Name="btnAdd" Grid.Row="2" Content="+ Добавить партнера" Style="{StaticResource AddButton}" HorizontalAlignment="Left" Click="BtnAdd_Click"/>
+
+        <DataGrid x:Name="dgPartners" Grid.Row="3">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Тип" Binding="{Binding PartnerType}" Width="80"/>
+                <DataGridTextColumn Header="Наименование" Binding="{Binding PartnerName}" Width="250"/>
+                <DataGridTextColumn Header="Директор" Binding="{Binding Director}" Width="200"/>
+                <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" Width="130"/>
+                <DataGridTextColumn Header="Рейтинг" Binding="{Binding Rating}" Width="80"/>
+                <DataGridTemplateColumn Header="Действия" Width="200">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button Content="Редактировать" Style="{StaticResource ActionButton}" Background="#4A90D9" Foreground="White" Click="BtnEdit_Click" Tag="{Binding}"/>
+                                <Button Content="Удалить" Style="{StaticResource ActionButton}" Background="#E74C3C" Foreground="White" Click="BtnDelete_Click" Tag="{Binding}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Border x:Name="EditPanel" Grid.RowSpan="4" Background="#FFFFFF" BorderBrush="#CCCCCC" BorderThickness="2" CornerRadius="10" 
+                Visibility="Collapsed" Width="520" Height="680" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="25">
+                    <TextBlock x:Name="EditTitle" Text="Добавление партнера" FontSize="22" FontWeight="Bold" Margin="0,0,0,25" HorizontalAlignment="Center"/>
+
+                    <TextBlock Text="Тип партнера" FontWeight="SemiBold" Margin="0,5,0,5"/>
+                    <TextBox x:Name="txtPartnerType" Height="35" Margin="0,0,0,15"/>
+
+                    <TextBlock Text="Наименование" FontWeight="SemiBold" Margin="0,5,0,5"/>
+                    <TextBox x:Name="txtPartnerName" Height="35" Margin="0,0,0,15"/>
+
+                    <TextBlock Text="Директор" FontWeight="SemiBold" Margin="0,5,0,5"/>
+                    <TextBox x:Name="txtDirector" Height="35" Margin="0,0,0,15"/>
+
+                    <TextBlock Text="Email" FontWeight="SemiBold" Margin="0,5,0,5"/>
+                    <TextBox x:Name="txtEmail" Height="35" Margin="0,0,0,15"/>
+
+                    <TextBlock Text="Телефон" FontWeight="SemiBold" Margin="0,5,0,5"/>
+                    <TextBox x:Name="txtPhone" Height="35" Margin="0,0,0,15"/>
+
+                    <TextBlock Text="Юридический адрес" FontWeight="SemiBold" Margin="0,5,0,5"/>
+                    <TextBox x:Name="txtLegalAddress" Height="60" TextWrapping="Wrap" Margin="0,0,0,15"/>
+
+                    <TextBlock Text="ИНН" FontWeight="SemiBold" Margin="0,5,0,5"/>
+                    <TextBox x:Name="txtINN" Height="35" Margin="0,0,0,15"/>
+
+                    <TextBlock Text="Рейтинг (1-10)" FontWeight="SemiBold" Margin="0,5,0,5"/>
+                    <TextBox x:Name="txtRating" Height="35" Margin="0,0,0,15"/>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,30,0,20">
+                        <Button Content="Сохранить" Style="{StaticResource SaveButton}" Click="BtnSave_Click"/>
+                        <Button Content="Отмена" Style="{StaticResource CancelButton}" Click="BtnCancel_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</Page>
